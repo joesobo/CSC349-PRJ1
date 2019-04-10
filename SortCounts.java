@@ -22,8 +22,7 @@ public class SortCounts {
             avgS = (Sorts1.mergeSort(arr2, i)) / i;
             avgQ = (Sorts1.mergeSort(arr3, i)) / i;
             System.out.print("N=" + i + ": C_SS=" + avgS + ", C_MS=" + avgM +
-            ", C_QS=" + avgQ);
-            System.out.println();
+            ", C_QS=" + avgQ + "\n");
         }
             System.out.println();
             System.out.println("End of output");

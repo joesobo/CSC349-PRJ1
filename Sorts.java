@@ -24,10 +24,64 @@ public class Sorts{
 
         //return arr;
     }
-    //Sorts the list of Nelements contained in arr[0..N-1]usingthemergesortalgorithm.
+    //Sorts the list of N elements contained in arr[0..N-1]using the mergesort algorithm.
     public static void mergeSort(int[] arr, int N){
-         
+        MergeSort(arr, 0, N-1);
     }
+
+    //behind the scenes work for mergesort
+    //rearranges the list using mergesort
+    private static void mergeSortedHalves (int[] list, int first, int middle, int last) {
+        int len1 = middle - first + 1;
+        int len2 = last - middle;
+
+        int[] left = new int[len1];
+        int[] right = new int[len2];
+
+        for (int i=0; i<len1; i++) {
+            left[i] = list[first + i];
+        }
+        for (int j = 0; j<len2; j++) {
+            right[j] = list[middle + 1 + j];
+        }
+
+        int i=0;
+        int j = 0;
+        int k = first;
+        while (i < len1 && j < len2) {
+            if (left[i] <= right[j]) {
+                list[k] = left[i];
+                i++;
+            }
+            else {
+                list[k] = right[j];
+                j++;
+            }
+            k++;
+        }
+
+        while (i <len1) {
+            list[k] = left[i];
+            i++;
+            k++;
+        }
+
+        while (j < len2) {
+            list[k] = right[j];
+            j++;
+            k++;
+        }
+    }
+
+    private static void MergeSort(int arr[], int first , int last) {
+        if (first < last) {
+            int mid = (first+last)/2;
+            MergeSort(arr, first, mid);
+            MergeSort(arr, mid+1, last);
+            mergeSortedHalves(arr, first, mid, last);
+        }
+    }
+
     //Sorts the list of N elements contained in arr[0..N-1]
     public static void quickSort(int[] arr, int N){
         sort(arr, 0, N-1);

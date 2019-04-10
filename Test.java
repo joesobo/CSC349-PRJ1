@@ -13,9 +13,10 @@ public class Test{
         for(int i = 1; i < 10; i++){
             arr = fillRand(N);
             compareArr = arr;
+
             Arrays.sort(compareArr);
             Sorts.selectionSort(arr, N);
-
+            
             if(arr.equals(compareArr)){
                 System.out.println("SS"+i+": True with N="+N);
             }else{

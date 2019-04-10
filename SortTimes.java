@@ -42,7 +42,7 @@ public class SortTimes{
                 endTime = System.nanoTime();
                 time3 = (int)(Math.abs(endTime-startTime)/1000000);
 
-                System.out.format("N=%4d: T_ss=%3d, T_ms=%2d, T_qs=%2d", N, time1, time2, time3);
+                System.out.format("N=%4d: T_ss=%3d, T_ms=%3d, T_qs=%3d", N, time1, time2, time3);
                 System.out.println();
             }
             System.out.println("");

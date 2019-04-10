@@ -30,23 +30,23 @@ public class Sorts{
     }
     //Sorts the list of N elements contained in arr[0..N-1]
     public static void quickSort(int[] arr, int N){
-        sort(arr, 0, N-1);
+        setPivotToEnd(arr, 0, N-1);
         //return arr;
     }
 
     //sorts
-    static void sort(int[] arr, int low, int high){
+    static void setPivotToEnd(int[] arr, int low, int high){
         if(low < high){
-            int pi = partition(arr, low, high);
+            int pi = splitList (arr, low, high);
 
             //recursive call sort on either partition
-            sort(arr, low, pi-1);
-            sort(arr, pi+1, high);
+            setPivotToEnd(arr, low, pi-1);
+            setPivotToEnd(arr, pi+1, high);
         }
     }
 
     //rearranges pivot and elements on either side
-    static int partition(int[] arr, int low, int high){
+    static int splitList (int[] arr, int low, int high){
         int piv = arr[high];
         int i = low-1;
         for(int j = low; j < high; j++){

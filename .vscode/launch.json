@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "CodeLens (Launch) - SortTimes",
+            "request": "launch",
+            "mainClass": "SortTimes",
+            "projectName": "CSC349-PRJ1_bd06e5c7"
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - Test",
             "request": "launch",
             "mainClass": "Test"

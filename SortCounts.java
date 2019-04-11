@@ -28,13 +28,8 @@ public class SortCounts {
                 avgS = (Sorts1.selectionSort(arr2, N));
                 avgQ = (Sorts1.quickSort(arr3, N));
             }
-
-            avgM /= 100;
-            avgS /= 100;
-            avgQ /= 100;
-            
-            System.out.println("N=" + N + ": C_SS=" + avgS + ", C_MS=" + avgM +
-            ", C_QS=" + avgQ);
+            System.out.print("N=" + N + ": C_SS=" + avgS + ", C_MS=" + avgM +
+            ", C_QS=" + avgQ + "\n");
         }
         System.out.println("\nEnd of output");
     }

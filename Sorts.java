@@ -84,64 +84,83 @@ public class Sorts{
 
     //Sorts the list of N elements contained in arr[0..N-1]
     public static void quickSort(int[] arr, int N){
-        setPivotToEnd(arr, 0, N-1);
-        //return arr;
+        quickSort(arr, 0, N-1);
     }
 
-    //sorts
-    static void setPivotToEnd(int[] arr, int low, int high){
-        if(low < high){
-            int pi = splitList (arr, low, high);
-
-            //recursive call sort on either partition
-            setPivotToEnd(arr, low, pi-1);
-            setPivotToEnd(arr, pi+1, high);
+    //Sorts list from first to last
+    public static void quickSort(int[] arr, int first, int last){
+        if(first < last){
+            setPivotToEnd(arr, first, last);
+            int pivotIndex = splitList(arr, first, last);
+            quickSort(arr, first, pivotIndex-1);
+            quickSort(arr, pivotIndex+1, last);
         }
     }
 
-    //rearranges pivot and elements on either side
-    static int splitList (int[] arr, int low, int high){
-        int piv = arr[high];
-        int i = low-1;
-        for(int j = low; j < high; j++){
-            if(arr[j] <= piv){
-                i++;
+    //Chooses pivot value and places at last index
+    //ensures arr[right] has pivot
+    static void setPivotToEnd(int[] arr, int low, int high){
+        //choose pivot
+        int middle = (low+high)/2;
+        int temp = 0;
 
-                //swap
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+        //compare first and center element for smaller
+        if(arr[low] > arr[middle]){
+            temp = arr[low];
+            arr[low] = arr[middle];
+            arr[middle] = temp;
+        }
+        
+        //compare first and last element for smaller
+        if(arr[low] > arr[high]){
+            temp=arr[low];
+            arr[low] = arr[high];
+            arr[high] = temp;
+        }
+        
+        //compare center and last element for larger
+        if(arr[middle] < arr[high]){
+            temp=arr[middle];
+            arr[middle] = arr[high];
+            arr[high] = temp;
+        }
+    }
+    //rearranges pivot and elements on either side
+    //requires arr[right] as pivot
+    static int splitList (int[] arr, int left, int right){
+        int indexL = left;
+        int indexR = right-1;
+        int pivot = arr[right];
+
+        //check for cross over
+        while(indexL < indexR){
+            
+            //move indexL to the right
+            while(arr[indexL] < pivot){
+                indexL++;
+            }
+
+            //move indexR to the left
+            while(arr[indexR] > pivot && indexL < indexR){
+                indexR--;
+            }
+
+            //check for cross over
+            if(indexL < indexR){
+                //swap elements at indexs
+                int temp = arr[indexL];
+                arr[indexL] = arr[indexR];
+                arr[indexR] = temp;
+                //move both indexs
+                indexL++;
+                indexR--;
             }
         }
-
-        //swap again
-        int temp = arr[i+1];
-        arr[i+1] = arr[high];
-        arr[high] = temp;
-
-        return i+1;
+        //swap element indexL with pivot
+        int temp = arr[indexL];
+        arr[indexL] = arr[right];
+        arr[right] = temp;
+        //returns index of pivot
+        return indexL;
     }
-
-    
-
-    // public static void main(String[] args){
-    //     int[] arr = {1,3,5,2,9};
-    //     System.out.println("Selection Sort");
-    //     printOut(arr);
-    //     arr = selectionSort(arr, arr.length);
-    //     System.out.println("");
-    //     printOut(arr);
-
-    //     System.out.println("Quick sort");
-    //     printOut(arr2);
-    //     arr2 = quickSort(arr2, arr2.length);
-    //     System.out.println("");
-    //     printOut(arr2);
-    // }
-
-    // public static void printOut(int[] arr){
-    //     for(int i = 0; i < arr.length; i++){
-    //         System.out.println(arr[i]);
-    //     }
-    // }
 }

@@ -1,32 +1,29 @@
+import java.util.Arrays;
+
 public class Sorts1 {
     private static long countM = 0;
     private static long countS = 0;
     private static long countQ = 0;
 
 
-    public static long  selectionSort(int[] arr, int N) {
-        int min = Integer.MAX_VALUE;
-        int pos = 0;
+    public static long selectionSort(int[] arr, int N) {
+        int minIndex;
         int save;
         for (int i = 0; i < N - 1; i++) {
 
             //find min
-            min = arr[i];
-            pos = i;
+            minIndex = i;
             for (int j = i + 1; j < N; j++) {
                 countS++;
-                if (arr[j] < min) {
-                    min = arr[j];
-                    pos = j;
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
                 }
-
-                //swap
-                save = min;
-                arr[pos] = arr[i];
-                arr[i] = save;
             }
 
-
+            //swap
+            save = arr[minIndex];
+            arr[minIndex] = arr[i];
+            arr[i] = save;
         }
         return countS;
     }
@@ -56,31 +53,30 @@ public class Sorts1 {
         int j = 0;
         int k = first;
         while (i < len1 && j < len2) {
+            countM++;
             if (left[i] <= right[j]) {
                 list[k] = left[i];
                 i++;
-                countM++;
             }
             else {
                 list[k] = right[j];
                 j++;
-                countM++;
             }
             k++;
         }
 
-        while (i <len1) {
+        while (i < len1) {
             list[k] = left[i];
             i++;
             k++;
-            countM++;
+            
         }
 
         while (j < len2) {
             list[k] = right[j];
             j++;
             k++;
-            countM++;
+            
         }
     }
 
@@ -93,73 +89,116 @@ public class Sorts1 {
         }
     }
 
-
     //Sorts the list of N elements contained in arr[0..N-1]
-    public static long quickSort (int[] arr, int N){
-        sort(arr, 0, N-1);
+    public static long quickSort(int[] arr, int N){
+        quickSort(arr, 0, N-1);
         return countQ;
     }
 
-    //rearranges pivot and elements on either side
-    static int partition(int[] arr, int low, int high){
-        int piv = arr[high];
-        int i = low-1;
-        for(int j = low; j < high; j++){
+    //Sorts list from first to last
+    public static void quickSort(int[] arr, int first, int last){
+        if(first < last){
+            setPivotToEnd(arr, first, last);
+            int pivotIndex = splitList(arr, first, last);
+            quickSort(arr, first, pivotIndex-1);
+            quickSort(arr, pivotIndex+1, last);
+        }
+    }
 
-            if(arr[j] <= piv){
-                i++;
+    //Chooses pivot value and places at last index
+    //ensures arr[right] has pivot
+    static void setPivotToEnd(int[] arr, int low, int high){
+        //choose pivot
+        int middle = (low+high)/2;
+        int temp = 0;
+
+        //compare first and center element for smaller
+        countQ++;
+        if(arr[low] > arr[middle]){
+            temp = arr[low];
+            arr[low] = arr[middle];
+            arr[middle] = temp;
+        }
+        
+        //compare first and last element for smaller
+        countQ++;
+        if(arr[low] > arr[high]){
+            temp=arr[low];
+            arr[low] = arr[high];
+            arr[high] = temp;
+        }
+        
+        //compare center and last element for larger
+        countQ++;
+        if(arr[middle] < arr[high]){
+            temp=arr[middle];
+            arr[middle] = arr[high];
+            arr[high] = temp;
+        }
+    }
+    //rearranges pivot and elements on either side
+    //requires arr[right] as pivot
+    static int splitList (int[] arr, int left, int right){
+        int indexL = left;
+        int indexR = right-1;
+        int pivot = arr[right];
+
+        //check for cross over
+        while(indexL < indexR){
+            
+            //move indexL to the right
+            while(arr[indexL] < pivot){
+                indexL++;
                 countQ++;
-                //swap
-                int temp = arr[i];
-                arr[i] = arr[j];
-                arr[j] = temp;
+            }
+
+            //move indexR to the left
+            while(arr[indexR] > pivot && indexL < indexR){
+                indexR--;
+                countQ++;
+            }
+
+            //check for cross over
+            if(indexL < indexR){
+                //swap elements at indexs
+                int temp = arr[indexL];
+                arr[indexL] = arr[indexR];
+                arr[indexR] = temp;
+                //move both indexs
+                indexL++;
+                indexR--;
             }
         }
-
-        //swap again
-        int temp = arr[i+1];
-        arr[i+1] = arr[high];
-        arr[high] = temp;
-
-        return i+1;
+        //swap element indexL with pivot
+        int temp = arr[indexL];
+        arr[indexL] = arr[right];
+        arr[right] = temp;
+        //returns index of pivot
+        return indexL;
     }
 
-    //sorts
-    static void sort(int[] arr, int low, int high){
-        if(low < high){
-            int pi = partition(arr, low, high);
-
-            //call sort on either partition
-            sort(arr, low, pi-1);
-            sort(arr, pi+1, high);
-        }
-    }
     public static void main(String[] args){
-        int[] arr = {1,3,5,2,9,4,8,7,6,11};
+        int[] arr = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
         System.out.println("Selection Sort");
         printOut(arr);
         long cs = selectionSort(arr, arr.length);
         System.out.println("count: " + cs);
         printOut(arr);
 
-        int[] arr2 = {1,3,5,2,9,4,8,7,6,11};
+        int[] arr2 = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
+        //int[] arr2 = {1,5,15,4,2,17,7,12,0,13,3,9,8,6};
+        //int[] arr2 = {1,8,2,10,4,5,9,11,3,12,15,7};
         System.out.println("Quick sort");
         printOut(arr2);
-        long cq = quickSort(arr2, arr.length);
+        long cq = quickSort(arr2, arr2.length);
         System.out.println("count: " + cq);
         printOut(arr2);
 
-      //  int[] arr3 = {1,3,5,2,9};
-      //  System.out.println("Merge sort");
-      //  printOut(arr3);arr3 = mergeSort(arr3, arr.length);
-      //  System.out.println("");
-      //  printOut(arr3);
-
-        int[] arr4 = {7,5,2,3};
-        System.out.println("Merge sort");
-        printOut(arr4);long count = mergeSort(arr4, arr4.length);
-        System.out.println("count: " + count);;
-        printOut(arr4);
+        // int[] arr4 = {7,5,2,3};
+        // System.out.println("Merge sort");
+        // printOut(arr4);long count = mergeSort(arr4, arr4.length);
+        // System.out.println("count: " + count);
+        // printOut(arr4);
     }
 
     public static void printOut(int[] arr){

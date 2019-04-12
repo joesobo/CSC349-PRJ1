@@ -5,15 +5,14 @@ public class Sorts1 {
     private static long countS = 0;
     private static long countQ = 0;
 
-
     public static long selectionSort(int[] arr, int N) {
         int minIndex;
-        int save;
+        countS = 0;
         for (int i = 0; i < N - 1; i++) {
 
             //find min
             minIndex = i;
-            for (int j = i + 1; j < N; j++) {
+            for (int j = i+1; j < N; j++) {
                 countS++;
                 if (arr[j] < arr[minIndex]) {
                     minIndex = j;
@@ -21,14 +20,16 @@ public class Sorts1 {
             }
 
             //swap
-            save = arr[minIndex];
-            arr[minIndex] = arr[i];
-            arr[i] = save;
+            // save = arr[i];
+            // arr[i] = min;
+            // arr[minIndex] = save;
+            swap(arr, i, minIndex);
         }
         return countS;
     }
     //Sorts the list of N elements contained in arr[0..N-1]using the mergesort algorithm.
     public static long mergeSort(int[] arr, int N){
+        countM = 0;
         MergeSort(arr, 0, N-1);
         return countM;
     }
@@ -91,6 +92,7 @@ public class Sorts1 {
 
     //Sorts the list of N elements contained in arr[0..N-1]
     public static long quickSort(int[] arr, int N){
+        countQ = 0;
         quickSort(arr, 0, N-1);
         return countQ;
     }
@@ -110,83 +112,75 @@ public class Sorts1 {
     static void setPivotToEnd(int[] arr, int low, int high){
         //choose pivot
         int middle = (low+high)/2;
-        int temp = 0;
 
         //compare first and center element for smaller
-        countQ++;
         if(arr[low] > arr[middle]){
-            temp = arr[low];
-            arr[low] = arr[middle];
-            arr[middle] = temp;
+            swap(arr, low, middle);
         }
+        countQ++;
         
         //compare first and last element for smaller
-        countQ++;
         if(arr[low] > arr[high]){
-            temp=arr[low];
-            arr[low] = arr[high];
-            arr[high] = temp;
+            swap(arr, low, high);
         }
+        countQ++;
         
         //compare center and last element for larger
-        countQ++;
         if(arr[middle] < arr[high]){
-            temp=arr[middle];
-            arr[middle] = arr[high];
-            arr[high] = temp;
+            swap(arr, middle, high);
         }
+        countQ++;
     }
     //rearranges pivot and elements on either side
     //requires arr[right] as pivot
-    static int splitList (int[] arr, int left, int right){
+    static int splitList(int[] arr, int left, int right){
         int indexL = left;
         int indexR = right-1;
         int pivot = arr[right];
 
         //check for cross over
-        while(indexL < indexR){
-            
+        while(indexL <= indexR){
+            //countQ++;
+
             //move indexL to the right
             while(arr[indexL] < pivot){
                 indexL++;
                 countQ++;
             }
+            countQ++;
 
             //move indexR to the left
-            while(arr[indexR] > pivot && indexL < indexR){
+            while(indexL <= indexR && arr[indexR] > pivot){
                 indexR--;
                 countQ++;
             }
 
             //check for cross over
-            if(indexL < indexR){
+            if(indexL <= indexR){
                 //swap elements at indexs
-                int temp = arr[indexL];
-                arr[indexL] = arr[indexR];
-                arr[indexR] = temp;
+                swap(arr, indexL, indexR);
                 //move both indexs
                 indexL++;
                 indexR--;
+                countQ++;
             }
         }
         //swap element indexL with pivot
-        int temp = arr[indexL];
-        arr[indexL] = arr[right];
-        arr[right] = temp;
+        swap(arr, indexL, right);
         //returns index of pivot
         return indexL;
     }
 
     public static void main(String[] args){
-        int[] arr = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
-        System.out.println("Selection Sort");
-        printOut(arr);
-        long cs = selectionSort(arr, arr.length);
-        System.out.println("count: " + cs);
-        printOut(arr);
+        // int[] arr = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
+        // System.out.println("Selection Sort");
+        // printOut(arr);
+        // long cs = selectionSort(arr, arr.length);
+        // System.out.println("count: " + cs);
+        // printOut(arr);
 
-        int[] arr2 = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
-        //int[] arr2 = {1,5,15,4,2,17,7,12,0,13,3,9,8,6};
+        //int[] arr2 = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
+        int[] arr2 = {1,5,15,4,2,17,7,12,0,13,3,9,8,6};
         //int[] arr2 = {1,8,2,10,4,5,9,11,3,12,15,7};
         System.out.println("Quick sort");
         printOut(arr2);
@@ -205,6 +199,12 @@ public class Sorts1 {
         for(int i = 0; i < arr.length; i++){
             System.out.println(arr[i]);
         }
+    }
+
+    private static void swap(int[] arr, int a, int b){
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 
 }

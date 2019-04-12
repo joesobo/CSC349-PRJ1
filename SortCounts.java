@@ -3,35 +3,54 @@ import java.util.Arrays;
 
 public class SortCounts {
     public static void main(String[] args){
-        Random r = new Random();
-        int[] arr1 = new int[12800];
-        int[] arr2 = new int[12800];
-        int[] arr3 = new int[12800];
-
-        long avgM = 0;
-        long avgS = 0;
-        long avgQ = 0;
-
         //counting with different N's
         for (int N=100; N<=12800; N *= 2 ) {
-
-            //test sorting arrays 100 times
-            for (int j = 0; j<100; j++){
-                //initialize array with randoms
-                for(int i = 0; i < N; i++){
-                    arr1[i] = r.nextInt();
-                    arr2[i] = r.nextInt();
-                    arr3[i] = r.nextInt();
-                }
-
-                avgM = (Sorts1.mergeSort(arr1, N));
-                avgS = (Sorts1.selectionSort(arr2, N));
-                avgQ = (Sorts1.quickSort(arr3, N));
-            }
-            System.out.print("N=" + N + ": C_SS=" + avgS + ", C_MS=" + avgM +
-            ", C_QS=" + avgQ + "\n");
+            calcAvg(N);
         }
         System.out.println("\nEnd of output");
     }
 
+    private static void calcAvg(int size){
+        long[] avgM = new long[100];
+        long[] avgS = new long[100];
+        long[] avgQ = new long[100];
+
+        //test sorting arrays 100 times
+        for (int j = 0; j<100; j++){
+            int[] template = randArr(size);
+            int[] arr1 = Arrays.copyOf(template, size);
+            int[] arr2 = Arrays.copyOf(template, size);
+            int[] arr3 = Arrays.copyOf(template, size);
+
+            avgM[j] = Sorts1.mergeSort(arr1, size);
+            avgS[j] = Sorts1.selectionSort(arr2, size);
+            avgQ[j] = Sorts1.quickSort(arr3, size);
+        }
+        long m = avgArr(avgM);
+        long s = avgArr(avgS);
+        long q = avgArr(avgQ);  
+        
+        System.out.print("N=" + size + 
+                        ": C_SS=" + s + 
+                        ", C_MS=" + m +
+                        ", C_QS=" + q + "\n");
+    }
+
+    private static int[] randArr(int size){
+        Random r = new Random();
+        int[] temp = new int[size];
+        //initialize array with randoms
+        for(int i = 0; i < size; i++){
+            temp[i] = r.nextInt();
+        }
+        return temp;
+    }
+
+    private static long avgArr(long[] arr){
+        long total = 0;
+        for(int i = 0; i < arr.length; i++){
+            total += arr[i];
+        }
+        return (long)total/arr.length;
+    }
 }

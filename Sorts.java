@@ -1,28 +1,22 @@
 public class Sorts{
-    //Sorts the list of Nelements contained in arr[0..N-1]using the selectionsortalgorithm.
-    public static void  selectionSort(int[] arr, int N){
-        int min = Integer.MAX_VALUE;
-        int pos = 0;
-        int save;
-        for(int i = 0; i < N-1; i++){
+    public static void selectionSort(int[] arr, int N) {
+        int minIndex;
+        for (int i = 0; i < N - 1; i++) {
 
             //find min
-            min = arr[i];
-            pos = i;
-            for(int j = i+1; j < N; j++){
-                if(arr[j] < min){
-                    min = arr[j];
-                    pos = j;
+            minIndex = i;
+            for (int j = i+1; j < N; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
                 }
             }
 
             //swap
-            save = min;
-            arr[pos] = arr[i];
-            arr[i] = save;
+            // save = arr[i];
+            // arr[i] = min;
+            // arr[minIndex] = save;
+            swap(arr, i, minIndex);
         }
-
-        //return arr;
     }
     //Sorts the list of N elements contained in arr[0..N-1]using the mergesort algorithm.
     public static void mergeSort(int[] arr, int N){
@@ -60,16 +54,18 @@ public class Sorts{
             k++;
         }
 
-        while (i <len1) {
+        while (i < len1) {
             list[k] = left[i];
             i++;
             k++;
+            
         }
 
         while (j < len2) {
             list[k] = right[j];
             j++;
             k++;
+            
         }
     }
 
@@ -102,65 +98,61 @@ public class Sorts{
     static void setPivotToEnd(int[] arr, int low, int high){
         //choose pivot
         int middle = (low+high)/2;
-        int temp = 0;
 
         //compare first and center element for smaller
         if(arr[low] > arr[middle]){
-            temp = arr[low];
-            arr[low] = arr[middle];
-            arr[middle] = temp;
+            swap(arr, low, middle);
         }
         
         //compare first and last element for smaller
         if(arr[low] > arr[high]){
-            temp=arr[low];
-            arr[low] = arr[high];
-            arr[high] = temp;
+            swap(arr, low, high);
         }
         
         //compare center and last element for larger
         if(arr[middle] < arr[high]){
-            temp=arr[middle];
-            arr[middle] = arr[high];
-            arr[high] = temp;
+            swap(arr, middle, high);
         }
     }
     //rearranges pivot and elements on either side
     //requires arr[right] as pivot
-    static int splitList (int[] arr, int left, int right){
+    static int splitList(int[] arr, int left, int right){
         int indexL = left;
         int indexR = right-1;
         int pivot = arr[right];
 
         //check for cross over
-        while(indexL < indexR){
-            
+        while(indexL <= indexR){
+            //countQ++;
+
             //move indexL to the right
             while(arr[indexL] < pivot){
                 indexL++;
             }
 
             //move indexR to the left
-            while(arr[indexR] > pivot && indexL < indexR){
+            while(indexL <= indexR && arr[indexR] > pivot){
                 indexR--;
             }
 
             //check for cross over
-            if(indexL < indexR){
+            if(indexL <= indexR){
                 //swap elements at indexs
-                int temp = arr[indexL];
-                arr[indexL] = arr[indexR];
-                arr[indexR] = temp;
+                swap(arr, indexL, indexR);
                 //move both indexs
                 indexL++;
                 indexR--;
             }
         }
         //swap element indexL with pivot
-        int temp = arr[indexL];
-        arr[indexL] = arr[right];
-        arr[right] = temp;
+        swap(arr, indexL, right);
         //returns index of pivot
         return indexL;
+    }
+
+    private static void swap(int[] arr, int a, int b){
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
     }
 }

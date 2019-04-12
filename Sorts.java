@@ -1,3 +1,7 @@
+//Sorts class
+//By Joseph Soboleski (jsoboles) and Salman Wajahat (swajahat)
+//Main sorting methods with no return for timer class
+
 public class Sorts{
     public static void selectionSort(int[] arr, int N) {
         int minIndex;
@@ -10,14 +14,10 @@ public class Sorts{
                     minIndex = j;
                 }
             }
-
-            //swap
-            // save = arr[i];
-            // arr[i] = min;
-            // arr[minIndex] = save;
             swap(arr, i, minIndex);
         }
     }
+
     //Sorts the list of N elements contained in arr[0..N-1]using the mergesort algorithm.
     public static void mergeSort(int[] arr, int N){
         MergeSort(arr, 0, N-1);
@@ -114,6 +114,7 @@ public class Sorts{
             swap(arr, middle, high);
         }
     }
+    
     //rearranges pivot and elements on either side
     //requires arr[right] as pivot
     static int splitList(int[] arr, int left, int right){
@@ -123,7 +124,6 @@ public class Sorts{
 
         //check for cross over
         while(indexL <= indexR){
-            //countQ++;
 
             //move indexL to the right
             while(arr[indexL] < pivot){

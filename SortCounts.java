@@ -1,3 +1,7 @@
+//Sorts Count class
+//By Joseph Soboleski (jsoboles) and Salman Wajahat (swajahat)
+//Counts average number of iterations of different sorts methods
+
 import java.util.Random;
 import java.util.Arrays;
 

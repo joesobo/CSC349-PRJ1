@@ -1,4 +1,6 @@
-import java.util.Arrays;
+//Sorts1 class
+//By Joseph Soboleski (jsoboles) and Salman Wajahat (swajahat)
+//Main sorting methods with no long for count class
 
 public class Sorts1 {
     private static long countM = 0;
@@ -19,14 +21,11 @@ public class Sorts1 {
                 }
             }
 
-            //swap
-            // save = arr[i];
-            // arr[i] = min;
-            // arr[minIndex] = save;
             swap(arr, i, minIndex);
         }
         return countS;
     }
+
     //Sorts the list of N elements contained in arr[0..N-1]using the mergesort algorithm.
     public static long mergeSort(int[] arr, int N){
         countM = 0;
@@ -131,6 +130,7 @@ public class Sorts1 {
         }
         countQ++;
     }
+
     //rearranges pivot and elements on either side
     //requires arr[right] as pivot
     static int splitList(int[] arr, int left, int right){
@@ -169,30 +169,6 @@ public class Sorts1 {
         swap(arr, indexL, right);
         //returns index of pivot
         return indexL;
-    }
-
-    public static void main(String[] args){
-        // int[] arr = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
-        // System.out.println("Selection Sort");
-        // printOut(arr);
-        // long cs = selectionSort(arr, arr.length);
-        // System.out.println("count: " + cs);
-        // printOut(arr);
-
-        //int[] arr2 = {1,1,1,2,3,5,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,24,100,14,17,124,23,43,243,64,2,2,2,2,2,2,2,2200,2,2,2,2,2,2,2,9,4,8,7,6,11};
-        int[] arr2 = {1,5,15,4,2,17,7,12,0,13,3,9,8,6};
-        //int[] arr2 = {1,8,2,10,4,5,9,11,3,12,15,7};
-        System.out.println("Quick sort");
-        printOut(arr2);
-        long cq = quickSort(arr2, arr2.length);
-        System.out.println("count: " + cq);
-        printOut(arr2);
-
-        // int[] arr4 = {7,5,2,3};
-        // System.out.println("Merge sort");
-        // printOut(arr4);long count = mergeSort(arr4, arr4.length);
-        // System.out.println("count: " + count);
-        // printOut(arr4);
     }
 
     public static void printOut(int[] arr){

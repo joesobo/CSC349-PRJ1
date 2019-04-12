@@ -1,3 +1,7 @@
+//Sorts Times class
+//By Joseph Soboleski (jsoboles) and Salman Wajahat (swajahat)
+//Counts average time for different sorts methods
+
 import java.util.Random;
 import java.util.Arrays;
 public class SortTimes{
@@ -22,19 +26,16 @@ public class SortTimes{
                 int time1, time2, time3 = 0;
                 long startTime, endTime = 0;
 
-                //ss
                 startTime = System.nanoTime();
                 Sorts.selectionSort(arr, N);
                 endTime = System.nanoTime();
                 time1 = (int)((endTime-startTime)/1000000);
 
-                //ms
                 startTime = System.nanoTime();
                 Sorts.mergeSort(arr2, N);
                 endTime = System.nanoTime();
                 time2 = (int)(Math.abs(endTime-startTime)/1000000);
 
-                //qs
                 startTime = System.nanoTime();
                 Sorts.quickSort(arr3, N);
                 endTime = System.nanoTime();

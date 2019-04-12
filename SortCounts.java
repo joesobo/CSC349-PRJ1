@@ -3,6 +3,7 @@ import java.util.Arrays;
 
 public class SortCounts {
     public static void main(String[] args){
+        System.out.println("Average number of element-comparisons in three sorting algorithms\n");
         //counting with different N's
         for (int N=100; N<=12800; N *= 2 ) {
             calcAvg(N);
